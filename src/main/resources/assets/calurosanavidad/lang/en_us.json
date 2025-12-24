@@ -1,0 +1,23 @@
+{
+  "item.calurosanavidad.water_pistol": "Water Pistol",
+  "item.calurosanavidad.water_gun": "Water Gun",
+
+  "message.calurosanavidad.water_shooter.full": "%s is full.",
+  "message.calurosanavidad.water_shooter.empty": "%s is empty.",
+  "message.calurosanavidad.water_shooter.needs_pump": "Not enough pressure. Pump it first!",
+  "message.calurosanavidad.water_shooter.ready": "Pressure is ready!",
+  "message.calurosanavidad.water_shooter.mode_stream": "Mode: Stream",
+  "message.calurosanavidad.water_shooter.mode_burst": "Mode: Burst",
+
+  "tooltip.calurosanavidad.water_shooter.water": "Water: %s/%s",
+  "tooltip.calurosanavidad.water_shooter.pressure": "Pressure: %s/%s",
+  "tooltip.calurosanavidad.water_shooter.mode": "Mode: %s",
+  "tooltip.calurosanavidad.water_shooter.hint_pump": "Shift + Right Click: Pump",
+  "tooltip.calurosanavidad.water_shooter.hint_fire": "Hold Right Click: Fire",
+
+  "mode.calurosanavidad.stream": "Stream",
+  "mode.calurosanavidad.burst": "Burst",
+
+  "key.categories.calurosanavidad": "Calurosa Navidad",
+  "key.calurosanavidad.toggle_water_mode": "Toggle Water Shooter Mode"
+}

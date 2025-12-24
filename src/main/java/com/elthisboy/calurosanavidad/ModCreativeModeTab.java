@@ -23,6 +23,7 @@ public class ModCreativeModeTab {
 
 
                         output.accept(ModItems.WATER_PISTOL.get());
+                        output.accept(ModItems.WATER_GUN.get());
                         output.accept(ModItems.WATER_BALLON.get());
                         output.accept(ModItems.CHRISTMAS_DINNER.get());
                         output.accept(ModItems.EASTER_BREAD.get());

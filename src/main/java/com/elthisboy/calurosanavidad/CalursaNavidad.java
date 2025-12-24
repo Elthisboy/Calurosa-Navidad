@@ -1,7 +1,11 @@
 package com.elthisboy.calurosanavidad;
 
 import com.elthisboy.calurosanavidad.block.ModBlock;
+import com.elthisboy.calurosanavidad.client.ClientKeybinds;
 import com.elthisboy.calurosanavidad.item.ModItems;
+import com.elthisboy.calurosanavidad.network.ModNetworking;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -33,9 +37,12 @@ public class CalursaNavidad {
         ModItems.register(modEventBus);
         ModBlock.register(modEventBus);
         ModCreativeModeTab.register(modEventBus);
+        ModNetworking.register(modEventBus);
 
-
-
+        ModNetworking.register(modEventBus);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            ClientKeybinds.init(modEventBus);
+        }
         // Register the item to a creative tab
         //modEventBus.addListener(this::addCreative);
 

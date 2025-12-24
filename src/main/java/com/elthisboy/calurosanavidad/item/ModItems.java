@@ -2,6 +2,8 @@ package com.elthisboy.calurosanavidad.item;
 
 import com.elthisboy.calurosanavidad.CalursaNavidad;
 import com.elthisboy.calurosanavidad.block.ModBlock;
+import com.elthisboy.calurosanavidad.item.custom.WaterGunItem;
+import com.elthisboy.calurosanavidad.item.custom.WaterPistolItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -13,7 +15,12 @@ public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CalursaNavidad.MOD_ID);
 
     public static final DeferredItem<Item> WATER_PISTOL = ITEMS.register("water_pistol",
-            () -> new Item(new Item.Properties()));
+            () -> new WaterPistolItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<Item> WATER_GUN = ITEMS.register("water_gun",
+            () -> new WaterGunItem(new Item.Properties().stacksTo(1)));
+
+
 
     public static final DeferredItem<Item> WATER_BALLON = ITEMS.register("water_balloon",
             () -> new Item(new Item.Properties()));

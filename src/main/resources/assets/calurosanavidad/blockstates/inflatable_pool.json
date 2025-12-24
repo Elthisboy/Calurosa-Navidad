@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    { "apply": { "model": "calurosanavidad:block/inflatable_pool" } },
+
+    { "when": { "level": "1" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_water_1" } },
+    { "when": { "level": "2" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_water_2" } },
+    { "when": { "level": "3" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_water_3" } }
+  ]
+}
