@@ -1,6 +1,7 @@
 package com.elthisboy.calurosanavidad.event;
 
 import com.elthisboy.calurosanavidad.CalursaNavidad;
+import com.elthisboy.calurosanavidad.ModEntities.ModEntities;
 import com.elthisboy.calurosanavidad.block.ModBlock;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -9,7 +10,10 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+
 
 @EventBusSubscriber(modid = CalursaNavidad.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 
@@ -36,5 +40,10 @@ public final class ClientModEvents {
         final int DEFAULT_WATER = 0x3F76E4;
         event.register((stack, tintIndex) -> tintIndex == 0 ? DEFAULT_WATER : -1,
                 ModBlock.INFLATABLE_POOL.get().asItem());
+    }
+
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntities.WATER_BALLOON_PROJECTILE.get(), ThrownItemRenderer::new);
     }
 }

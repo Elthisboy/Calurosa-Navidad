@@ -1,5 +1,6 @@
 package com.elthisboy.calurosanavidad;
 
+import com.elthisboy.calurosanavidad.ModEntities.ModEntities;
 import com.elthisboy.calurosanavidad.block.ModBlock;
 import com.elthisboy.calurosanavidad.client.ClientKeybinds;
 import com.elthisboy.calurosanavidad.item.ModItems;
@@ -38,6 +39,8 @@ public class CalursaNavidad {
         ModBlock.register(modEventBus);
         ModCreativeModeTab.register(modEventBus);
         ModNetworking.register(modEventBus);
+        ModEntities.ENTITIES.register(modEventBus);
+
 
         ModNetworking.register(modEventBus);
         if (FMLEnvironment.dist == Dist.CLIENT) {

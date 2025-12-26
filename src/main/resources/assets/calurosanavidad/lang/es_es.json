@@ -1,0 +1,27 @@
+{
+  "itemGroup.calurosanavidad": "Calurosa Navidad",
+
+  "item.calurosanavidad.water_pistol": "Pistola de agua",
+  "item.calurosanavidad.water_gun": "Lanzador de agua",
+  "item.calurosanavidad.water_balloon_empty": "Globo de agua vacío",
+  "item.calurosanavidad.water_balloon_filled": "Globo de agua",
+
+  "entity.calurosanavidad.water_balloon_projectile": "Globo de agua",
+
+  "tooltip.calurosanavidad.pressure": "Presión: %s",
+  "tooltip.calurosanavidad.mode": "Modo: %s",
+  "tooltip.calurosanavidad.water_place_chance": "Prob. de colocar agua: %s%%",
+  "tooltip.calurosanavidad.hint_fire": "Clic derecho: Disparar",
+  "tooltip.calurosanavidad.hint_pump": "Agacharse + clic derecho: Bombear",
+
+  "tooltip.calurosanavidad.mode.single": "Único",
+  "tooltip.calurosanavidad.mode.burst": "Ráfaga",
+  "tooltip.calurosanavidad.mode.stream": "Chorro",
+
+  "key.categories.calurosanavidad": "Calurosa Navidad",
+  "key.calurosanavidad.pump": "Bombear",
+  "key.calurosanavidad.change_mode": "Cambiar modo",
+
+  "message.calurosanavidad.mode_changed": "Modo cambiado a: %s",
+  "message.calurosanavidad.pressure_changed": "Presión: %s"
+}
