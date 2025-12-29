@@ -23,5 +23,13 @@
   "key.calurosanavidad.change_mode": "Cambiar modo",
 
   "message.calurosanavidad.mode_changed": "Modo cambiado a: %s",
-  "message.calurosanavidad.pressure_changed": "Presión: %s"
+  "message.calurosanavidad.pressure_changed": "Presión: %s",
+
+
+  "entity.calurosanavidad.santa_claus": "Santa Claus",
+  "gui.calurosanavidad.santa.accept": "Mision %s",
+  "gui.calurosanavidad.santa.claim": "Reclamar recompenza",
+  "gui.calurosanavidad.santa.gift": "recibir regalo",
+  "gui.calurosanavidad.santa.active": "Misión Activa: %s",
+  "gui.calurosanavidad.santa.completed_mask": "Completadas: %s"
 }

@@ -2,5 +2,15 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "calurosanavidad:item/water_pistol"
+  },
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [15, -90, 0],
+      "translation": [0, 2, -4]
+    },
+    "firstperson_lefthand": {
+      "rotation": [15, 90, 0],
+      "translation": [0, 2, -4]
+    }
   }
-}
+  }

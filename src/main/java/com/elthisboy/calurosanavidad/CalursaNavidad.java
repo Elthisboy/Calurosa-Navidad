@@ -1,9 +1,11 @@
 package com.elthisboy.calurosanavidad;
 
 import com.elthisboy.calurosanavidad.ModEntities.ModEntities;
+import com.elthisboy.calurosanavidad.attachment.ModAttachments;
 import com.elthisboy.calurosanavidad.block.ModBlock;
 import com.elthisboy.calurosanavidad.client.ClientKeybinds;
 import com.elthisboy.calurosanavidad.item.ModItems;
+import com.elthisboy.calurosanavidad.menu.ModMenus;
 import com.elthisboy.calurosanavidad.network.ModNetworking;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -20,6 +22,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(CalursaNavidad.MOD_ID)
@@ -40,12 +44,16 @@ public class CalursaNavidad {
         ModCreativeModeTab.register(modEventBus);
         ModNetworking.register(modEventBus);
         ModEntities.ENTITIES.register(modEventBus);
+        ModMenus.MENUS.register(modEventBus);
+        ModAttachments.ATTACHMENTS.register(modEventBus);
 
 
-        ModNetworking.register(modEventBus);
         if (FMLEnvironment.dist == Dist.CLIENT) {
             ClientKeybinds.init(modEventBus);
         }
+
+        modEventBus.addListener(this::registerEntityAttributes);
+
         // Register the item to a creative tab
         //modEventBus.addListener(this::addCreative);
 
@@ -55,6 +63,10 @@ public class CalursaNavidad {
 
     private void commonSetup(FMLCommonSetupEvent event) {
 }
+
+    private void registerEntityAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.SANTA_CLAUS.get(), ModEntities.createAttributes());
+    }
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {

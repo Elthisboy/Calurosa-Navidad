@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "calurosanavidad:item/water_gun_empty"
+    "layer0": "calurosanavidad:item/water_gun_filled"
   },
   "display": {
     "firstperson_righthand": {
@@ -12,11 +12,6 @@
       "rotation": [-30, 90, 0],
       "translation": [0, 2, -5]
     }
-  },
-  "overrides": [
-    {
-      "predicate": { "calurosanavidad:filled": 1.0 },
-      "model": "calurosanavidad:item/water_gun_filled"
-    }
-  ]
+
+  }
 }

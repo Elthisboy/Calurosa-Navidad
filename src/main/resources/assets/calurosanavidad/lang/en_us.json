@@ -20,5 +20,13 @@
   "mode.calurosanavidad.burst": "Burst",
 
   "key.categories.calurosanavidad": "Calurosa Navidad",
-  "key.calurosanavidad.toggle_water_mode": "Toggle Water Shooter Mode"
+  "key.calurosanavidad.toggle_water_mode": "Toggle Water Shooter Mode",
+
+
+  "entity.calurosanavidad.santa_claus": "Santa Claus",
+  "gui.calurosanavidad.santa.accept": "Accept mision %s",
+  "gui.calurosanavidad.santa.claim": "Claim Rewards",
+  "gui.calurosanavidad.santa.gift": "Ask Gifts",
+  "gui.calurosanavidad.santa.active": "Active: %s",
+  "gui.calurosanavidad.santa.completed_mask": "Completed: %s"
 }
