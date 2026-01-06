@@ -27,9 +27,30 @@
 
 
   "entity.calurosanavidad.santa_claus": "Santa Claus",
-  "gui.calurosanavidad.santa.accept": "Mision %s",
-  "gui.calurosanavidad.santa.claim": "Reclamar recompenza",
-  "gui.calurosanavidad.santa.gift": "recibir regalo",
+  "item.calurosanavidad.santa_claus_spawn_egg": "Huevo generador de Santa Claus",
+  "gui.calurosanavidad.santa.accept": "Misión %s",
+  "gui.calurosanavidad.santa.claim": "Reclamar recompensa",
+  "gui.calurosanavidad.santa.gift": "Recibir regalo diario",
+  "gui.calurosanavidad.santa.daily_gift_ready": "Regalo diario: ¡Listo!",
+  "gui.calurosanavidad.santa.daily_gift_in": "Regalo diario: %s",
   "gui.calurosanavidad.santa.active": "Misión Activa: %s",
-  "gui.calurosanavidad.santa.completed_mask": "Completadas: %s"
+  "gui.calurosanavidad.santa.completed_mask": "Completadas: %s",
+  "gui.calurosanavidad.santa.active_none": "Misión activa: Ninguna",
+  "gui.calurosanavidad.santa.completed": "Completadas: %s/%s",
+  "gui.calurosanavidad.santa.debug_reset": "DEBUG: Reiniciar",
+
+
+
+
+  "message.calurosanavidad.santa.accepted": "Misión %s activada.",
+  "message.calurosanavidad.santa.no_active": "No tienes una misión activa.",
+  "message.calurosanavidad.santa.already_completed": "La misión %s ya está completada.",
+  "message.calurosanavidad.santa.missing_items": "Te faltan %s x %s (tienes %s).",
+  "message.calurosanavidad.santa.requirements": "Pide: %s x %s. Recompensa: %s x %s.",
+  "message.calurosanavidad.santa.coal_chance": "Ojo: %s%% de probabilidad de carbón.",
+  "message.calurosanavidad.santa.claimed": "Recompensa de la misión %s reclamada.",
+  "message.calurosanavidad.santa.gift_cooldown": "Regalo diario disponible en: %s.",
+  "message.calurosanavidad.santa.gift_already": "Ya recibiste un regalo hoy.",
+  "message.calurosanavidad.santa.gift_received": "¡Recibiste un regalo!",
+  "message.calurosanavidad.santa.debug_reset_done": "DEBUG: misiones y regalo reiniciados."
 }

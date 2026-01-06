@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public record SantaActionPayload(int santaEntityId, Action action, int questId) implements CustomPacketPayload {
 
-    public enum Action { ACCEPT, CLAIM, GIFT }
+    public enum Action { ACCEPT, CLAIM, GIFT, DEBUG_RESET }
 
     public static final Type<SantaActionPayload> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(CalursaNavidad.MOD_ID, "santa_action"));

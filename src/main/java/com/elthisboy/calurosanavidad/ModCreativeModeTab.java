@@ -29,6 +29,7 @@ public class ModCreativeModeTab {
                         output.accept(ModItems.CHRISTMAS_DINNER.get());
                         output.accept(ModItems.EASTER_BREAD.get());
                         output.accept(ModBlock.INFLATABLE_POOL.get());
+                        output.accept(ModItems.SANTA_CLAUS_SPAWN_EGG.get());
 
 
 

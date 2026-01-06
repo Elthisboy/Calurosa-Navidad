@@ -1,6 +1,7 @@
 package com.elthisboy.calurosanavidad.item;
 
 import com.elthisboy.calurosanavidad.CalursaNavidad;
+import com.elthisboy.calurosanavidad.ModEntities.ModEntities;
 import com.elthisboy.calurosanavidad.block.ModBlock;
 import com.elthisboy.calurosanavidad.item.custom.WaterBalloonEmptyItem;
 import com.elthisboy.calurosanavidad.item.custom.WaterBalloonFilledItem;
@@ -10,6 +11,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -39,7 +41,15 @@ public class ModItems {
             "inflatable_pool",
             () -> new BlockItem(ModBlock.INFLATABLE_POOL.get(), new Item.Properties())
     );
-
+    public static final DeferredItem<Item> SANTA_CLAUS_SPAWN_EGG = ITEMS.register(
+            "santa_claus_spawn_egg",
+            () -> new DeferredSpawnEggItem(
+                    ModEntities.SANTA_CLAUS,
+                    0xC40000, // rojo
+                    0xFFFFFF, // blanco
+                    new Item.Properties()
+            )
+    );
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);

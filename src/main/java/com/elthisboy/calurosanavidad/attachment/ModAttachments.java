@@ -1,7 +1,6 @@
 package com.elthisboy.calurosanavidad.attachment;
 
 import com.elthisboy.calurosanavidad.CalursaNavidad;
-import com.mojang.serialization.Codec;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -14,7 +13,7 @@ public final class ModAttachments {
 
     public static final Supplier<AttachmentType<SantaQuestData>> SANTA_DATA =
             ATTACHMENTS.register("santa_data", () ->
-                    AttachmentType.builder(() -> new SantaQuestData(-1, 0, -1L))
+                    AttachmentType.builder(() -> new SantaQuestData(-1, 0, 0L, 0L))
                             // Persistencia (NBT)
                             .serialize(SantaQuestData.CODEC)
                             // Copiar al morir

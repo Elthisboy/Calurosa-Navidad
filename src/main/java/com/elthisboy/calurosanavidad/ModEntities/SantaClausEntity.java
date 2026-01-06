@@ -1,7 +1,9 @@
 package com.elthisboy.calurosanavidad.ModEntities;
 
+import com.elthisboy.calurosanavidad.attachment.ModAttachments;
+import com.elthisboy.calurosanavidad.attachment.SantaQuestData;
 import com.elthisboy.calurosanavidad.menu.SantaMenu;
-import net.minecraft.network.FriendlyByteBuf;
+import com.elthisboy.calurosanavidad.quest.SantaDailyLogic;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -16,16 +18,21 @@ import net.neoforged.neoforge.common.extensions.IPlayerExtension;
 
 public class SantaClausEntity extends PathfinderMob implements MenuProvider {
 
-
     protected SantaClausEntity(EntityType<? extends PathfinderMob> type, net.minecraft.world.level.Level level) {
         super(type, level);
     }
 
-
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!level().isClientSide && player instanceof ServerPlayer sp) {
-            // Si NO mandas extraData: ((IPlayerExtension) sp).openMenu(this);
+            // Normaliza reset diario al abrir el menú para que el GUI muestre todo actualizado
+            long nowMs = System.currentTimeMillis();
+            SantaQuestData data0 = sp.getData(ModAttachments.SANTA_DATA.get());
+            SantaQuestData data = SantaDailyLogic.normalizeQuestReset(data0, nowMs);
+            if (data != data0) {
+                sp.setData(ModAttachments.SANTA_DATA.get(), data);
+            }
+
             ((IPlayerExtension) sp).openMenu(this, buf -> buf.writeVarInt(this.getId()));
         }
         return InteractionResult.sidedSuccess(level().isClientSide);
@@ -41,5 +48,3 @@ public class SantaClausEntity extends PathfinderMob implements MenuProvider {
         return new SantaMenu(containerId, playerInv, this.getId());
     }
 }
-
-

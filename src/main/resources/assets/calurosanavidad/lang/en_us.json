@@ -22,11 +22,31 @@
   "key.categories.calurosanavidad": "Calurosa Navidad",
   "key.calurosanavidad.toggle_water_mode": "Toggle Water Shooter Mode",
 
+  "entity.calurosanavidad.santa_claus": "Santa Claus",
+  "item.calurosanavidad.santa_claus_spawn_egg": "Santa Claus Spawn Egg",
 
   "entity.calurosanavidad.santa_claus": "Santa Claus",
-  "gui.calurosanavidad.santa.accept": "Accept mision %s",
-  "gui.calurosanavidad.santa.claim": "Claim Rewards",
-  "gui.calurosanavidad.santa.gift": "Ask Gifts",
+  "gui.calurosanavidad.santa.accept": "Mission %s",
+  "gui.calurosanavidad.santa.claim": "Claim reward",
+  "gui.calurosanavidad.santa.gift": "Claim daily gift",
+  "gui.calurosanavidad.santa.daily_gift_ready": "Daily gift: Ready!",
+  "gui.calurosanavidad.santa.daily_gift_in": "Daily gift: %s",
   "gui.calurosanavidad.santa.active": "Active: %s",
-  "gui.calurosanavidad.santa.completed_mask": "Completed: %s"
+  "gui.calurosanavidad.santa.completed_mask": "Completed: %s",
+  "gui.calurosanavidad.santa.active_none": "Active mission: None",
+  "gui.calurosanavidad.santa.completed": "Completed: %s/%s",
+  "gui.calurosanavidad.santa.debug_reset": "DEBUG: Reset",
+
+
+  "message.calurosanavidad.santa.accepted": "Mission %s activated.",
+  "message.calurosanavidad.santa.no_active": "You don't have an active mission.",
+  "message.calurosanavidad.santa.requirements": "Needs: %s x %s. Reward: %s x %s.",
+  "message.calurosanavidad.santa.coal_chance": "Note: %s%% chance of coal.",
+  "message.calurosanavidad.santa.already_completed": "Mission %s is already completed.",
+  "message.calurosanavidad.santa.missing_items": "You need %s x %s (you have %s).",
+  "message.calurosanavidad.santa.claimed": "Claimed reward for mission %s.",
+  "message.calurosanavidad.santa.gift_cooldown": "Daily gift available in: %s.",
+  "message.calurosanavidad.santa.gift_already": "You already got a gift today.",
+  "message.calurosanavidad.santa.gift_received": "You received a gift!",
+  "message.calurosanavidad.santa.debug_reset_done": "DEBUG: missions and gift reset."
 }

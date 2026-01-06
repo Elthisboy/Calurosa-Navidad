@@ -13,12 +13,11 @@ public final class ModNetworking {
         if (REGISTERED) return;
         REGISTERED = true;
 
-        // Un solo listener, un solo registro
         modEventBus.addListener(ModNetworking::registerPayloads);
     }
 
     private static void registerPayloads(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar r = event.registrar(CalursaNavidad.MOD_ID).versioned("1");
+        PayloadRegistrar r = event.registrar(CalursaNavidad.MOD_ID).versioned("2");
 
         r.playToServer(
                 ToggleWaterPistolModePayload.TYPE,
@@ -30,6 +29,13 @@ public final class ModNetworking {
                 SantaActionPayload.TYPE,
                 SantaActionPayload.STREAM_CODEC,
                 SantaServerHandler::handle
+        );
+
+        // ACK server -> client para cerrar la pantalla solo si el server confirma.
+        r.playToClient(
+                SantaAckPayload.TYPE,
+                SantaAckPayload.STREAM_CODEC,
+                SantaAckPayload::handle
         );
     }
 
