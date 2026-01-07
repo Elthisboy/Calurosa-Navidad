@@ -86,7 +86,19 @@ public class SantaScreen extends AbstractContainerScreen<SantaMenu> {
         int giftY = claimY + btnH + 8;
         this.giftBtn = Button.builder(
                 Component.translatable("gui.calurosanavidad.santa.gift"),
-                btn -> PacketDistributor.sendToServer(new SantaActionPayload(menu.getSantaEntityId(), SantaActionPayload.Action.GIFT, -1))
+                btn -> {
+                    // esperar ACK del server (para cerrar solo si se entregó)
+                    this.waitingAck = true;
+                    this.pendingQuestId = -1; // -1 = "gift" (no es misión)
+                    this.pendingSantaId = menu.getSantaEntityId();
+
+                    PacketDistributor.sendToServer(new SantaActionPayload(
+                            menu.getSantaEntityId(),
+                            SantaActionPayload.Action.GIFT,
+                            -1
+                    ));
+                    updateButtons();
+                }
         ).pos(x, giftY).size(btnW, btnH).build();
         this.addRenderableWidget(this.giftBtn);
 
@@ -124,9 +136,6 @@ public class SantaScreen extends AbstractContainerScreen<SantaMenu> {
                 if (ack.success()) {
                     this.onClose();
                     return;
-                } else {
-                    // si falla, re-habilitamos botones
-                    updateButtons();
                 }
             }
         }
@@ -160,7 +169,10 @@ public class SantaScreen extends AbstractContainerScreen<SantaMenu> {
         }
 
         if (debugBtn != null) {
-            debugBtn.active = true;
+            var mc = Minecraft.getInstance();
+            boolean creative = mc.gameMode != null && mc.gameMode.getPlayerMode() == GameType.CREATIVE;
+            debugBtn.visible = creative;
+            debugBtn.active = creative;
         }
     }
 

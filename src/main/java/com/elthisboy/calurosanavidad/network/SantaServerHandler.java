@@ -121,18 +121,34 @@ public final class SantaServerHandler {
                     // Gift diario con cooldown 24h real
                     if (!SantaDailyLogic.isGiftReady(data, nowMs)) {
                         long rem = SantaDailyLogic.giftRemainingMs(data, nowMs);
-                        player.displayClientMessage(Component.translatable("message.calurosanavidad.santa.gift_cooldown", formatHms(rem)), false);
+                        player.displayClientMessage(
+                                Component.translatable("message.calurosanavidad.santa.gift_cooldown", formatHms(rem)),
+                                false
+                        );
+
+                        // ACK: falló (no cerrar)
+                        PacketDistributor.sendToPlayer(player,
+                                new SantaAckPayload(payload.santaEntityId(), payload.questId(), false));
                         return;
                     }
 
                     RandomSource r = player.getRandom();
-                    ItemStack gift = r.nextBoolean() ? new ItemStack(Items.COAL, 1) : new ItemStack(Items.COOKIE, 3);
+                    ItemStack gift = r.nextBoolean()
+                            ? new ItemStack(Items.COAL, 1)
+                            : new ItemStack(Items.COOKIE, 3);
                     player.addItem(gift);
 
                     SantaQuestData next = SantaDailyLogic.setGiftClaimedNow(data, nowMs);
                     player.setData(ModAttachments.SANTA_DATA.get(), next);
 
-                    player.displayClientMessage(Component.translatable("message.calurosanavidad.santa.gift_received"), false);
+                    player.displayClientMessage(
+                            Component.translatable("message.calurosanavidad.santa.gift_received"),
+                            false
+                    );
+
+                    // ACK: éxito (cerrar)
+                    PacketDistributor.sendToPlayer(player,
+                            new SantaAckPayload(payload.santaEntityId(), payload.questId(), true));
                 }
             }
         });
