@@ -1,0 +1,15 @@
+{
+  "display": {
+    "icon": { "id": "minecraft:chest" },
+    "title": "Triple pega",
+    "description": "Completaste 3 misiones de Santa en un mismo día.",
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "calurosanavidad:first_mission",
+  "criteria": {
+    "done": { "trigger": "minecraft:impossible" }
+  }
+}

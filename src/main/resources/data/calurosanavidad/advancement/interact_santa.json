@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": { "id": "minecraft:bell" },
+    "title": "Apareció el Viejito",
+    "description": "Encontraste a Santa en una Navidad calurosa.",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "calurosanavidad:calurosa_navidad",
+  "criteria": {
+    "talk": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "calurosanavidad:santa_claus"
+        }
+      }
+    }
+  }
+}

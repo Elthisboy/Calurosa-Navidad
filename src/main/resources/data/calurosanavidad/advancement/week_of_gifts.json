@@ -1,0 +1,15 @@
+{
+  "display": {
+    "icon": { "id": "minecraft:clock" },
+    "title": "Semana de regalos",
+    "description": "Reclamaste el regalo diario 7 días seguidos.",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "calurosanavidad:daily_gift",
+  "criteria": {
+    "done": { "trigger": "minecraft:impossible" }
+  }
+}
