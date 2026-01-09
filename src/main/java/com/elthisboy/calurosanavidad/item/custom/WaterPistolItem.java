@@ -71,8 +71,8 @@ public class WaterPistolItem extends Item {
     }
 
     // ===== Stats (WaterGun hereda y overridea esto) =====
-    protected int maxWater() { return 16; }
-    protected int maxPressure() { return 4; }
+    protected int maxWater() { return 18; }
+    protected int maxPressure() { return 6; }
     protected double range() { return 8.0; }
     protected int streamIntervalTicks() { return 2; }
     protected int burstIntervalTicks() { return 6; }
@@ -200,21 +200,22 @@ public class WaterPistolItem extends Item {
 
         boolean filled = false;
 
-        // 1) Piscina (tu bloque)
+        // 1) Piscina (tu bloque) -> drena 1 “capa” completa del cluster (1x1/1x2/L/2x2)
         if (state.getBlock() instanceof InflatablePool) {
-            int poolLevel = state.getValue(InflatablePool.LEVEL);
-            if (poolLevel > 0) {
-                int add = Math.min(fillAmountPerUse(), maxWater() - getWater(stack));
-
+            int add = Math.min(fillAmountPerUse(), maxWater() - getWater(stack));
+            if (add > 0) {
                 if (!level.isClientSide) {
-                    setWater(stack, getWater(stack) + add);
-
-                    int newLevel = Math.max(0, poolLevel - 1);
-                    level.setBlock(clicked, state.setValue(InflatablePool.LEVEL, newLevel), 3);
-
-                    level.playSound(null, clicked, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0f, 1.0f);
+                    // ✅ baja el nivel de TODA la piscina (cluster) en 1 capa completa
+                    boolean ok = InflatablePool.tryDrainOneLayerForGun(level, clicked);
+                    if (ok) {
+                        setWater(stack, getWater(stack) + add);
+                        level.playSound(null, clicked, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0f, 1.0f);
+                        filled = true;
+                    }
+                } else {
+                    // Cliente: solo para animación/feedback; el server decide de verdad
+                    if (state.getValue(InflatablePool.LEVEL) > 0) filled = true;
                 }
-                filled = true;
             }
         }
         // 2) Caldero con agua

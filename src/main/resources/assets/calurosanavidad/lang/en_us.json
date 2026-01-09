@@ -1,8 +1,11 @@
 {
+  "itemGroup.calurosanavidad": "Calurosa Navidad",
+
   "item.calurosanavidad.water_pistol": "Water Pistol",
   "item.calurosanavidad.water_gun": "Water Gun",
   "item.calurosanavidad.water_balloon_empty":"Water Balloon Empty",
   "item.calurosanavidad.water_balloon_filled": "Water Balloon Filled",
+
   "message.calurosanavidad.water_shooter.full": "%s is full.",
   "message.calurosanavidad.water_shooter.empty": "%s is empty.",
   "message.calurosanavidad.water_shooter.needs_pump": "Not enough pressure. Pump it first!",

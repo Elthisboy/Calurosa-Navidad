@@ -28,6 +28,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -80,6 +81,10 @@ public class InflatablePool extends Block {
         return s.getBlock() instanceof InflatablePool;
     }
 
+    private static boolean isPool(LevelAccessor level, BlockPos pos) {
+        return level.getBlockState(pos).getBlock() instanceof InflatablePool;
+    }
+
     private static VoxelShape eastWall(boolean wallN, boolean wallS) {
         if (wallN && wallS) return HB_WALL_E_Z1_15;
         if (!wallN && wallS) return HB_WALL_E_Z0_15;
@@ -100,7 +105,6 @@ public class InflatablePool extends Block {
 
         // El codo se define por dos vecinos ADYACENTES.
         // El tapón va en la esquina "faltante" (diagonal donde NO hay bloque en la L).
-        // Según tu blockstate, el modelo base de corner_* está orientado como CORNER_NW.
         if (n && w) return HB_ELBOW_SE; // vecinos N+W -> falta SE
         if (n && e) return HB_ELBOW_SW; // vecinos N+E -> falta SW
         if (s && e) return HB_ELBOW_NW; // vecinos S+E -> falta NW
@@ -158,9 +162,6 @@ public class InflatablePool extends Block {
         if (!fitsMax2x2(ctx.getLevel(), pos)) return null;
 
         PoolVariant v = computeVariant(ctx.getLevel(), pos);
-
-        // elbow se calcula mejor luego de colocar (cuando ya existe el cluster),
-        // pero igual lo inicializamos en false.
         return this.defaultBlockState()
                 .setValue(LEVEL, 0)
                 .setValue(VARIANT, v)
@@ -277,10 +278,10 @@ public class InflatablePool extends Block {
         return true;
     }
 
-    // ===== Cluster de agua compartida =====
-    private List<BlockPos> getConnectedCluster(LevelAccessor level, BlockPos origin) {
+    // ===== Cluster helpers (agua compartida) =====
+    private static List<BlockPos> getConnectedCluster(LevelAccessor level, BlockPos origin) {
         List<BlockPos> out = new ArrayList<>();
-        if (!isPool(level.getBlockState(origin))) return out;
+        if (!isPool(level, origin)) return out;
 
         Set<BlockPos> visited = new HashSet<>();
         ArrayDeque<BlockPos> q = new ArrayDeque<>();
@@ -298,8 +299,7 @@ public class InflatablePool extends Block {
             for (Direction d : Direction.Plane.HORIZONTAL) {
                 BlockPos n = p.relative(d);
                 if (visited.contains(n)) continue;
-
-                if (!isPool(level.getBlockState(n))) continue;
+                if (!isPool(level, n)) continue;
 
                 // mantener bounding 2x2
                 int nMinX = Math.min(minX, n.getX());
@@ -319,7 +319,49 @@ public class InflatablePool extends Block {
             }
         }
 
+        // orden estable (para que el reparto sea consistente)
+        out.sort(Comparator.<BlockPos>comparingInt(p -> p.getX())
+                .thenComparingInt(p -> p.getZ())
+                .thenComparingInt(p -> p.getY()));
         return out;
+    }
+
+    private static int totalPoints(LevelAccessor level, List<BlockPos> cluster) {
+        int sum = 0;
+        for (BlockPos p : cluster) {
+            BlockState s = level.getBlockState(p);
+            if (!(s.getBlock() instanceof InflatablePool)) continue;
+            sum += s.getValue(LEVEL);
+        }
+        return sum;
+    }
+
+    /**
+     * Reparte "total" puntos de agua de la forma más pareja posible entre los bloques del cluster.
+     * (diferencia máxima de 1 entre bloques).
+     */
+    private static void applyTotal(LevelAccessor level, List<BlockPos> cluster, int total) {
+        int size = cluster.size();
+        if (size <= 0) return;
+
+        int cap = size * 3;
+        if (total < 0) total = 0;
+        if (total > cap) total = cap;
+
+        int base = total / size;
+        int rem = total % size;
+
+        for (int i = 0; i < size; i++) {
+            BlockPos p = cluster.get(i);
+            BlockState s = level.getBlockState(p);
+            if (!(s.getBlock() instanceof InflatablePool)) continue;
+
+            int newLevel = base + (i < rem ? 1 : 0);
+            int old = s.getValue(LEVEL);
+            if (newLevel != old) {
+                level.setBlock(p, s.setValue(LEVEL, newLevel), 3);
+            }
+        }
     }
 
     private boolean computeElbow(LevelAccessor level, BlockPos pos) {
@@ -342,87 +384,50 @@ public class InflatablePool extends Block {
         return cluster.size() == 3;
     }
 
-    private int sumLevels(LevelAccessor level, List<BlockPos> cluster) {
-        int sum = 0;
-        for (BlockPos p : cluster) {
-            BlockState s = level.getBlockState(p);
-            if (!isPool(s)) continue;
-            sum += s.getValue(LEVEL);
-        }
-        return sum;
-    }
+    /**
+     * ✅ Para tus PISTOLAS DE AGUA:
+     * Baja el nivel "de toda la piscina" (cluster) exactamente 1 "capa":
+     * - 1x1: -1 punto
+     * - 1x2: -2 puntos (1 por bloque)
+     * - L (3): -3 puntos
+     * - 2x2 (4): -4 puntos
+     *
+     * Retorna true si pudo (hay suficiente agua para bajar 1 capa completa).
+     */
+    public static boolean tryDrainOneLayerForGun(LevelAccessor level, BlockPos origin) {
+        List<BlockPos> cluster = getConnectedCluster(level, origin);
+        if (cluster.isEmpty()) return false;
 
-    private boolean allFull(LevelAccessor level, List<BlockPos> cluster) {
-        for (BlockPos p : cluster) {
-            BlockState s = level.getBlockState(p);
-            if (!isPool(s)) continue;
-            if (s.getValue(LEVEL) < 3) return false;
-        }
+        int size = cluster.size();
+        int total = totalPoints(level, cluster);
+
+        if (total < size) return false; // no hay suficiente para bajar una capa completa
+
+        applyTotal(level, cluster, total - size);
         return true;
     }
 
-    private void addWaterPoints(LevelAccessor level, List<BlockPos> cluster, int points) {
-        for (int i = 0; i < points; i++) {
-            BlockPos bestPos = null;
-            int bestLevel = 999;
-
-            for (BlockPos p : cluster) {
-                BlockState s = level.getBlockState(p);
-                if (!isPool(s)) continue;
-                int lv = s.getValue(LEVEL);
-                if (lv >= 3) continue;
-                if (lv < bestLevel) {
-                    bestLevel = lv;
-                    bestPos = p;
-                }
-            }
-
-            if (bestPos == null) return;
-
-            BlockState s = level.getBlockState(bestPos);
-            level.setBlock(bestPos, s.setValue(LEVEL, s.getValue(LEVEL) + 1), 3);
-        }
-    }
-
-    private void removeWaterPoints(LevelAccessor level, List<BlockPos> cluster, int points) {
-        for (int i = 0; i < points; i++) {
-            BlockPos bestPos = null;
-            int bestLevel = -1;
-
-            for (BlockPos p : cluster) {
-                BlockState s = level.getBlockState(p);
-                if (!isPool(s)) continue;
-                int lv = s.getValue(LEVEL);
-                if (lv <= 0) continue;
-                if (lv > bestLevel) {
-                    bestLevel = lv;
-                    bestPos = p;
-                }
-            }
-
-            if (bestPos == null) return;
-
-            BlockState s = level.getBlockState(bestPos);
-            level.setBlock(bestPos, s.setValue(LEVEL, s.getValue(LEVEL) - 1), 3);
-        }
-    }
-
-    // ===== Interacción con baldes =====
+    // ===== Interacción con BALDES (mantiene tu lógica de "4 baldes para 2x2") =====
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
 
+        // Water Bucket: +3 puntos repartidos en el cluster (equilibrado)
         if (stack.is(Items.WATER_BUCKET)) {
             List<BlockPos> cluster = getConnectedCluster(level, pos);
             if (cluster.isEmpty()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-            // si ya está todo lleno -> bloquear (para que no ponga agua encima)
-            if (allFull(level, cluster)) {
+            int size = cluster.size();
+            int total = totalPoints(level, cluster);
+            int cap = size * 3;
+
+            // ✅ si ya está lleno, NO permitir “poner agua encima”
+            if (total >= cap) {
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
 
             if (!level.isClientSide) {
-                addWaterPoints(level, cluster, 3);
+                applyTotal(level, cluster, Math.min(cap, total + 3));
 
                 if (!player.getAbilities().instabuild) {
                     player.setItemInHand(hand, new ItemStack(Items.BUCKET));
@@ -434,17 +439,16 @@ public class InflatablePool extends Block {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
+        // Bucket vacío: -3 puntos del cluster -> entrega water bucket
         if (stack.is(Items.BUCKET)) {
             List<BlockPos> cluster = getConnectedCluster(level, pos);
             if (cluster.isEmpty()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-            int total = sumLevels(level, cluster);
-            if (total < 3) {
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-            }
+            int total = totalPoints(level, cluster);
+            if (total < 3) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
             if (!level.isClientSide) {
-                removeWaterPoints(level, cluster, 3);
+                applyTotal(level, cluster, total - 3);
 
                 if (!player.getAbilities().instabuild) {
                     player.setItemInHand(hand, new ItemStack(Items.WATER_BUCKET));

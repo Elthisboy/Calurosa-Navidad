@@ -6,6 +6,13 @@
   "item.calurosanavidad.water_balloon_empty": "Globo de agua vacío",
   "item.calurosanavidad.water_balloon_filled": "Globo de agua",
 
+  "message.calurosanavidad.water_shooter.full": "%s ya está llena.",
+  "message.calurosanavidad.water_shooter.empty": "%s está vacía.",
+  "message.calurosanavidad.water_shooter.needs_pump": "¡Tienes que bombearla!",
+  "message.calurosanavidad.water_shooter.ready": "¡Lista!",
+  "message.calurosanavidad.water_shooter.mode_stream": "Modo: Chorro",
+  "message.calurosanavidad.water_shooter.mode_burst": "Modo: Ráfaga",
+
   "entity.calurosanavidad.water_balloon_projectile": "Globo de agua",
 
   "tooltip.calurosanavidad.pressure": "Presión: %s",
