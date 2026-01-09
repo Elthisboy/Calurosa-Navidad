@@ -7,19 +7,21 @@
     { "when": { "variant": "end_e" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_3_walls", "y": 180 } },
     { "when": { "variant": "end_s" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_3_walls", "y": 270 } },
 
+    { "when": { "variant": "straight_ns" }, "apply": { "model": "calurosanavidad:block/inflatable_pool" } },
+    { "when": { "variant": "straight_ew" }, "apply": { "model": "calurosanavidad:block/inflatable_pool" } },
 
-    { "when": { "variant": "straight_ns" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls" } },
-    { "when": { "variant": "straight_ew" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls", "y": 90 } },
+    { "when": { "variant": "corner_nw", "elbow": false }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls", "y": 0 } },
+    { "when": { "variant": "corner_ne", "elbow": false }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls", "y": 90 } },
+    { "when": { "variant": "corner_se", "elbow": false }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls", "y": 180 } },
+    { "when": { "variant": "corner_sw", "elbow": false }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls", "y": 270 } },
 
-
-    { "when": { "variant": "corner_nw" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls" } },
-    { "when": { "variant": "corner_ne" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls", "y": 90 } },
-    { "when": { "variant": "corner_se" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls", "y": 180 } },
-    { "when": { "variant": "corner_sw" }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls", "y": 270 } },
+    { "when": { "variant": "corner_nw", "elbow": true }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls_corner", "y": 0 } },
+    { "when": { "variant": "corner_ne", "elbow": true }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls_corner", "y": 90 } },
+    { "when": { "variant": "corner_se", "elbow": true }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls_corner", "y": 180 } },
+    { "when": { "variant": "corner_sw", "elbow": true }, "apply": { "model": "calurosanavidad:block/inflatable_pool_2_walls_corner", "y": 270 } },
 
     { "when": { "level": 1 }, "apply": { "model": "calurosanavidad:block/inflatable_pool_water_1" } },
     { "when": { "level": 2 }, "apply": { "model": "calurosanavidad:block/inflatable_pool_water_2" } },
     { "when": { "level": 3 }, "apply": { "model": "calurosanavidad:block/inflatable_pool_water_3" } }
   ]
 }
-
